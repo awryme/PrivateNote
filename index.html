@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Asd</title>
+    <script src="/files/axios.js"></script>
+    <script>
+        function send() {
+            var cont = document.getElementById('content').value;
+            axios.post('/api/new/60', {cont:cont})
+                .then(function (res) {
+                    if (res.status === 200) {
+                        window.location = '/'+res.data;
+                    }
+                })
+        }
+    </script>
+</head>
+<body>
+    <div>
+        Note will be destroyed: in 1 Hour
+    </div>
+    <div>
+        <textarea id="content" cols="50" rows="20"></textarea>
+    </div>
+    <div>
+        <button onclick="send()">Create</button>
+    </div>
+</body>
+</html>

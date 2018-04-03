@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Asd</title>
+    <script src="/files/axios.js"></script>
+    <script>
+        function copyToClipBoard() {
+            var textarea = document.createElement("textarea");
+            textarea.textContent = 'http://localhost:1234/'+thisid;
+            textarea.style.position = "fixed";  // Prevent scrolling to bottom of page in MS Edge.
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                return document.execCommand("copy");  // Security exception may be thrown by some browsers.
+            } catch (ex) {
+                console.warn("Copy to clipboard failed.", ex);
+                return false;
+            } finally {
+                document.body.removeChild(textarea);
+            }
+        }
+    </script>
+    <script>
+        var thisid = "%s";
+        axios.get('/api/'+thisid)
+            .then(function (res) {
+                document.getElementById('content').innerHTML = res.data.content;
+                document.getElementById('link').innerHTML = '/'+res.data.id;
+                document.getElementById('link').href = '/'+res.data.id;
+            })
+    </script>
+</head>
+<body>
+<div>
+    Note will be destroyed: in 1 Hour
+</div>
+<div>
+    <p id="content"></p>
+</div>
+<div>
+    <a id="link"></a>
+    <button onclick="copyToClipBoard()">Copy</button>
+</div>
+</body>
+</html>
